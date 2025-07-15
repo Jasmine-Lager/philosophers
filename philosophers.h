@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/14 16:23:31 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/15 13:22:23 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>   // memset
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // write, usleep
+# include <errno.h> // For error codes like EINVAL, EPERM, etc.
 // no libft authorization here
 
 // ANSI escape codes for colored text :)
@@ -125,8 +126,8 @@ void					start_simulation(t_table table);
 // status_actions.c
 
 // status_printing.c
-void	print_status(t_philosopher_status status, t_philosophers *philosopher, 
-	bool bugs);
+void	print_status(t_philosopher_status status, t_philosophers *philosopher); 
+	// bool bugs);
 
 // thread_mutex.c
 void					safe_mutex(t_mutex *mutex, t_code code);

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   thread_mutex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:20:59 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/11 12:47:54 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/15 13:15:45 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	mutex_error(int status, t_code code)
+static void	mutex_error(int status)
 {
 	if (status == 0)
 		return ;
 	if (status == EINVAL)
 		return_error("Mutex returning error: value specified is invalid");
-	else if (status == EDEADLCK)
+	else if (status == EDEADLK)
 		return_error("Mutex returning error: deadlock, thread blocked");
 	else if (status == EPERM)
 		return_error("Mutex returning error: thread not holding lock");
@@ -35,14 +35,14 @@ void	safe_mutex(t_mutex *mutex, t_code code)
 	else if (code == UNLOCK)
 		mutex_error(pthread_mutex_unlock(mutex));
 	else if (code == INIT)
-		mutex_error(ptherad_mutex_init(mutex, NULL));
+		mutex_error(pthread_mutex_init(mutex, NULL));
 	else if (code == DESTROY)
-		mutex_error(ptherad_mutex_destroy(mutex));
+		mutex_error(pthread_mutex_destroy(mutex));
 	else
 		return_error("Wrong mutex code");
 }
 
-static void	thread_error(int status, t_code code)
+static void	thread_error(int status)
 {
 	if (status == 0)
 		return ;
@@ -62,11 +62,11 @@ void	safe_thread(t_thread *thread, void *(*ops)(void *), void *data,
 		t_code code)
 {
 	if (code == CREATE)
-		thread_error(pthread_create(thread, NULL, ops, data), code);
+		thread_error(pthread_create(thread, NULL, ops, data));
 	else if (code == JOIN)
-		thread_error(pthread_join(*thread, NULL), code);
+		thread_error(pthread_join(*thread, NULL));
 	else if (code == DETACH)
-		thread_error(ptherad_detach(*thread), code);
+		thread_error(pthread_detach(*thread));
 	else
 		return_error("Wrong thread code");
 }

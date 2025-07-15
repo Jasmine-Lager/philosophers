@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/14 16:25:23 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/15 13:06:11 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	initialize(t_table *table)
 	i = 0;
 	table->everyone_ready = false;
 	table->finish = false;
-	table->number_of_philosophers = safe_malloc(sizeof(t_philosophers)
+	table->philosopher = safe_malloc(sizeof(t_philosophers)
 			* table->number_of_philosophers);
 	safe_mutex(&table->table_mutex, INIT);
 	safe_mutex(&table->printing_lock_mutex, INIT);
