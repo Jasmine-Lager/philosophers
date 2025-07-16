@@ -2,13 +2,14 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread # -pthread necesary for mutex & threads
 
 SRCS = \
+	copy_paste.c \
+	customer_service.c \
+	initilizing.c \
 	main.c \
 	parsing.c \
-	initilizing.c \
-	copy_paste.c \
-	thread_mutex.c \
-	status_printing.c \
+	print_status.c \
 	start_simulation.c \
+	thread_mutex.c \
 	utilities.c
 
 OBJS = $(SRCS:.c=.o)
@@ -19,6 +20,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(MAKE) clean
 
 %.o: %.c philosophers.h
 	$(CC) $(CFLAGS) -c $< -o $@

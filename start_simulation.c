@@ -6,20 +6,11 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/14 16:12:57 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/16 15:26:22 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-// similarly like waiting for a signal back in minitalk
-// "spinlock"
-// loops until flag is changed
-void	wait_for_everyone(t_table *table)
-{
-	while(copy_bool(&table->table_mutex, &table->everyone_ready))
-		;
-}
 
 static void	eating(t_philosophers *philosopher)
 {
@@ -41,7 +32,7 @@ static void	eating(t_philosophers *philosopher)
 
 static void	thinking(t_philosophers *philosopher)
 {
-	print_status(THINKIN, philosopher, DEBUG_MODE);
+	print_status(THINKING, philosopher, DEBUG_MODE);
 }
 
 void	*dining(void *data)
@@ -50,24 +41,30 @@ void	*dining(void *data)
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
-	
-	while (!finished_simulation())
+	paste_long(philosopher->philosopher_mutex, philosopher->time_last_eat, 
+		get_time(MILISECONDS));
+	increase_thread_count(&philosopher->table->table_mutex, 
+		&philosopher->threads_count);
+	while (!finished_simulation(philosopher->table))
 	{
 		if (philosopher->full)
 			break ;
 		eating(philosopher);
-		print_status(SLEEPING, philosopher, DEBUG_MODE)
+		print_status(SLEEPING, philosopher, DEBUG_MODE);
 		better_usleep(philosopher->table->time_to_sleep, philosopher->table);
-
-		thinking()
+		thinking(philosopher);
 	}
-
 	return(NULL);
 }
+static void	one_philosopher(void *)
+{
+	
+}
+
 
 // ./philosophers 5 800 200 200 [5]
 // number_of_philosophers time_to_die time_to_eat time_to_sleep [meals_to_full]
-void	start_simulation(t_table table)
+void	start_simulation(t_table *table)
 {
 	int	i;
 
@@ -75,7 +72,8 @@ void	start_simulation(t_table table)
 	if (table->number_of_philosophers == 0)
 		return ;
 	else if (table->number_of_philosophers == 1)
-		;
+		safe_thread(&table->philosopher[0].thread_id, one_philosopher, 
+			&table->philosopher[0], CREATE);
 	else if (table->number_of_philosophers > 1)
 	{
 		while (i < table->number_of_philosophers)
@@ -85,12 +83,10 @@ void	start_simulation(t_table table)
 			i++;
 		}
 	}
+	safe_thread(&table->waiter, customer_service, table, CREATE);
 	table->start = get_time(MICROSECONDS);
-	paste_bool(&table->table_mutex, table->everyone_ready, true);
-	i = 0;
-	while(i < table->number_of_philosophers)
-	{
-		safe_thread(table>philosopher[i].thread_id, NULL, NULL, JOIN);
-		i++;
-	}
+	paste_bool(&table->table_mutex, &table->everyone_ready, true);
+	i = -1;
+	while(i++ < table->number_of_philosophers)
+		safe_thread(&table->philosopher[i].thread_id, NULL, NULL, JOIN);
 }

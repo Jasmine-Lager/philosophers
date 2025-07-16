@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/15 13:06:11 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/16 14:11:09 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	assing_fork(t_philosophers *philosopher, t_forks *fork, int chair)
 	number_of_philosophers = philosopher->table->number_of_philosophers;
 	if (philosopher->id % 2 == 1)
 	{
-		philosopher->left_fork = &fork[(chair + 1) % number_of_philosophers];
 		philosopher->right_fork = &fork[chair];
+		philosopher->left_fork = &fork[(chair + 1) % number_of_philosophers];
 	}
 	else if (philosopher->id % 2 == 0)
 	{
@@ -44,7 +44,7 @@ static void	init_philosophers(t_table *table)
 		philosopher->full = false;
 		philosopher->meals_count = 0;
 		philosopher->table = table;
-		safe_mutex(philosopher->philosopher_mutex, INIT);
+		safe_mutex(&philosopher->philosopher_mutex, INIT);
 		assing_fork(philosopher, table->fork, i);
 	}
 }
@@ -54,8 +54,9 @@ void	initialize(t_table *table)
 	int	i;
 
 	i = 0;
-	table->everyone_ready = false;
 	table->finish = false;
+	table->everyone_ready = false;
+	table->threads_running = 0;
 	table->philosopher = safe_malloc(sizeof(t_philosophers)
 			* table->number_of_philosophers);
 	safe_mutex(&table->table_mutex, INIT);

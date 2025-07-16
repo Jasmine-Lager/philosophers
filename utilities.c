@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:35:44 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/14 13:59:26 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/16 13:35:18 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*safe_malloc(size_t bytes)
 	void	*result;
 
 	result = malloc(bytes);
-	if (bytes == NULL)
+	if (bytes == 0)
 		return_error("Error at malloc");
 	return (result);
 }
@@ -44,7 +44,7 @@ long	get_time(t_time time)
 	else if (time == MILISECONDS)
 		return ((time_value.tv_sec * 1000) + (time_value.tv_usec / 1000));
 	else if (time == MICROSECONDS)
-		return((time_value * 1000000) + time_value.tv_usec);
+		return((time_value.tv_sec * 1000000) + time_value.tv_usec);
 	else	
 		return_error(R"Wrong time input"RESET);
 	return (-1);
@@ -66,17 +66,17 @@ void	better_usleep(long microseconds, t_table *table)
 	long	time_remaining;
 
 	time_start = get_time(MICROSECONDS);
-	while ((get_time(MICROSECODS) - time_start) < microseconds)
+	while ((get_time(MICROSECONDS) - time_start) < microseconds)
 	{
 		if (finished_simulation(table))
 			break ;
 		time_passed = get_time(MICROSECONDS) - time_start;
 		time_remaining = microseconds - time_passed;
-		if (remaining > 1000)
-			usleep(microseconds / 2);
+		if (time_remaining > 1000)
+			usleep(time_remaining / 2);
 		else
 		{
-			while ((get_time(MICROSECODS) - time_start) < microseconds)
+			while ((get_time(MICROSECONDS) - time_start) < microseconds)
 				;
 		}
 	}

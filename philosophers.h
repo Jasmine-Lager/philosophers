@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/15 13:22:23 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/16 15:00:29 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define G "\x1b[32m"
 # define B "\x1b[34m"
 # define RESET "\x1b[0m"
+
+# define DEBUG_MODE 0
 
 // for more readable code; renaming
 // mutex = MUTual EXclusion object = "reserves" global variables
@@ -62,7 +64,7 @@ typedef enum			e_philosopher_status
 	EATING,
 	SLEEPING,
 	THINKING,
-	DIED,
+	DEAD,
 }						t_philosopher_status;
 
 // declaration for compiling
@@ -83,8 +85,9 @@ typedef struct			s_philosophers
 	t_forks				*left_fork;
 	t_forks				*right_fork;
 	t_table				*table;
+	long				threads_count;
 	pthread_t			thread_id;
-	t_mutex				*philosopher_mutex;
+	t_mutex				philosopher_mutex;
 }						t_philosophers;
 
 // ./philosophers 5 800 200 200 [5]
@@ -103,6 +106,7 @@ typedef struct			s_table
 	t_philosophers		*philosopher;
 	t_mutex				table_mutex;
 	t_mutex				printing_lock_mutex;
+	pthread_t			waiter; // monitoring thread looking for dead philos
 }						t_table;
 
 // copy_paste.c
@@ -111,23 +115,29 @@ void					paste_bool(t_mutex *mutex, bool *dst, bool value);
 long					copy_long(t_mutex *mutex, long *value);
 void					paste_long(t_mutex *mutex, long *dst, long value);
 
+// customer_service.c
+void					wait_for_everyone(t_table *table);
+void					increase_thread_count(t_mutex *mutex, long *value);
+bool					everyone_ready(t_mutex *mutex, long *threads, 
+							long number_of_philosophers);
+bool					philosopher_dead(t_philosophers *philosopher);
+void					*customer_service(void *value);
+
+
 // initializing.c
 void					initialize(t_table *table);
 
 // parsing.c
 void					parsing(t_table *table, char **argv);
 
+// print_status.c
+void					print_status(t_philosopher_status status, 
+							t_philosophers *philosopher, bool bugs);
 
 // start_simulation.c
 void					*dining(void *data);
-void					wait_for_everyone(t_table *table);
-void					start_simulation(t_table table);
+void					start_simulation(t_table *table);
 
-// status_actions.c
-
-// status_printing.c
-void	print_status(t_philosopher_status status, t_philosophers *philosopher); 
-	// bool bugs);
 
 // thread_mutex.c
 void					safe_mutex(t_mutex *mutex, t_code code);
