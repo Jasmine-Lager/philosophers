@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:35:44 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/16 13:35:18 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/21 13:25:22 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@ void	return_error(const char *error_msg)
 {
 	printf("❗️%s❗️\n", error_msg);
 	exit(EXIT_FAILURE);
-}
-
-void	*safe_malloc(size_t bytes)
-{
-	void	*result;
-
-	result = malloc(bytes);
-	if (bytes == 0)
-		return_error("Error at malloc");
-	return (result);
 }
 
 bool	finished_simulation(t_table *table)
@@ -80,4 +70,22 @@ void	better_usleep(long microseconds, t_table *table)
 				;
 		}
 	}
+}
+
+void	cleanup_and_exit(t_table *table)
+{
+	t_philosophers	*philosopher;
+	int				i;
+	
+	i = 0;
+	while(i < table->number_of_philosophers)
+	{
+		philosopher = table->philosopher + i;
+		safe_mutex(&philosopher->philosopher_mutex, DESTROY);
+		i++;
+	}
+	safe_mutex(&table->printing_lock_mutex, DESTROY);
+	safe_mutex(&table->table_mutex, DESTROY);
+	free(table->fork);
+	free(table->philosopher);
 }

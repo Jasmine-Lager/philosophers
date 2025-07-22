@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 14:14:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/16 14:42:42 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/21 13:31:56 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	print_status(t_philosopher_status status, t_philosophers *philosopher,
 	safe_mutex(&philosopher->table->printing_lock_mutex, LOCK);
 	time_stamp = get_time(MILISECONDS) - philosopher->table->start;
 	if (philosopher->full)
+	{
+		safe_mutex(&philosopher->table->printing_lock_mutex, UNLOCK);
 		return ;
+	}
 	if (debug)
 		print_debug(status, philosopher, time_stamp);
 	if ((status == TAKE_LEFT_FORK || status == TAKE_RIGHT_FORK)

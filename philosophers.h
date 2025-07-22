@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/16 15:00:29 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/22 11:19:16 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define B "\x1b[34m"
 # define RESET "\x1b[0m"
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 
 // for more readable code; renaming
 // mutex = MUTual EXclusion object = "reserves" global variables
@@ -85,7 +85,6 @@ typedef struct			s_philosophers
 	t_forks				*left_fork;
 	t_forks				*right_fork;
 	t_table				*table;
-	long				threads_count;
 	pthread_t			thread_id;
 	t_mutex				philosopher_mutex;
 }						t_philosophers;
@@ -102,6 +101,7 @@ typedef struct			s_table
 	bool				everyone_ready;
 	long				start;
 	bool				finish;
+	long				threads_count;
 	t_forks				*fork;
 	t_philosophers		*philosopher;
 	t_mutex				table_mutex;
@@ -139,16 +139,18 @@ void					*dining(void *data);
 void					start_simulation(t_table *table);
 
 
-// thread_mutex.c
+// safe_thread_mutex_malloc.c
 void					safe_mutex(t_mutex *mutex, t_code code);
 void					safe_thread(t_thread *thread, void *(*ops)(void *),
 							void *data, t_code code);
+void					*safe_malloc(size_t bytes);
 
 // utilities.c
 void					return_error(const char *error_msg);
-void					*safe_malloc(size_t bytes);
 bool					finished_simulation(t_table *table);
 long					get_time(t_time time);
 void					better_usleep(long microseconds, t_table *table);
+void					cleanup_and_exit(t_table *table);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/16 15:26:22 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/22 11:33:10 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	*dining(void *data)
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
-	paste_long(philosopher->philosopher_mutex, philosopher->time_last_eat, 
+	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat, 
 		get_time(MILISECONDS));
 	increase_thread_count(&philosopher->table->table_mutex, 
-		&philosopher->threads_count);
+		&philosopher->table->threads_count);
 	while (!finished_simulation(philosopher->table))
 	{
 		if (philosopher->full)
@@ -56,9 +56,20 @@ void	*dining(void *data)
 	}
 	return(NULL);
 }
-static void	one_philosopher(void *)
+static void *one_philosopher(void *data)
 {
-	
+    t_philosophers *philosopher;
+
+    philosopher = (t_philosophers *)data;
+    wait_for_everyone(philosopher->table);
+    paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
+        get_time(MILISECONDS));
+    increase_thread_count(&philosopher->table->table_mutex,
+        &philosopher->table->threads_count);
+    print_status(TAKE_LEFT_FORK, philosopher, DEBUG_MODE);
+    while(!finished_simulation(philosopher->table))
+        better_usleep(200, philosopher->table);
+    return (NULL);
 }
 
 
@@ -89,4 +100,6 @@ void	start_simulation(t_table *table)
 	i = -1;
 	while(i++ < table->number_of_philosophers)
 		safe_thread(&table->philosopher[i].thread_id, NULL, NULL, JOIN);
+	paste_bool(&table->table_mutex, &table->finish, true);
+	safe_thread(&table->waiter, NULL, NULL, JOIN);
 }

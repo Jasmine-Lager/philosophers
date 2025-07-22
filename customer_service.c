@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:05:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/16 15:01:06 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/22 11:09:20 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	philosopher_dead(t_philosophers *philosopher)
 		return (false);
 	time_last_eat = get_time(MILISECONDS) - 
 		copy_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat);
-	time_to_die = philosopher->table->time_to_die;
+	time_to_die = philosopher->table->time_to_die / 1000;
 	if (time_last_eat > time_to_die)
 		return(true);
 	else
@@ -62,10 +62,10 @@ void *customer_service(void *value)
 	int		i;
 	t_table	*table;
 
-	table = (t_table *)data;
+	table = (t_table *)value;
 
 	while (!everyone_ready(&table->table_mutex, &table->threads_count, 
-			table->number_of_philosophers))
+		table->number_of_philosophers))
 		;
 	while (!finished_simulation(table))
 	{
@@ -75,7 +75,7 @@ void *customer_service(void *value)
 			if (philosopher_dead(table->philosopher + i))
 			{
 				paste_bool(&table->table_mutex, &table->finish, true);
-				print_status(DEAD, table->philosopher + 1, DEBUG_MODE);
+				print_status(DEAD, table->philosopher + i, DEBUG_MODE);
 			}
 			i++;
 		}

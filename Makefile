@@ -8,8 +8,8 @@ SRCS = \
 	main.c \
 	parsing.c \
 	print_status.c \
+	safe_thread_mutex_malloc.c \
 	start_simulation.c \
-	thread_mutex.c \
 	utilities.c
 
 OBJS = $(SRCS:.c=.o)

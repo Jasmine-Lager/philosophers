@@ -6,7 +6,7 @@
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 10:04:28 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/14 16:17:35 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/21 13:27:13 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ void	parsing(t_table *table, char **argv)
 	{
 		table->meals_to_full = ft_atol(argv[5]);
 		if (table->meals_to_full <= 0)
-			return_error("Use only positive numbers");
+			return_error(R"Use only positive numbers"RESET);
 		if (table->meals_to_full > 2147483647)
-			return_error("Number is too big, use INT_MAX or smaller");
+			return_error(R"Number is too big, use INT_MAX or smaller"RESET);
 	}
 	if (table->number_of_philosophers <= 0 || table->time_to_die <= 0
 		|| table->time_to_eat <= 0 || table->time_to_sleep <= 0)
-		return_error("Use only positive numbers");
+		return_error(R"Use only positive numbers"RESET);
 	if (table->number_of_philosophers > INT_MAX || table->time_to_die > INT_MAX
 		|| table->time_to_eat > INT_MAX || table->time_to_sleep > 2147483647)
-		return_error("Number is too big, use INT_MAX or smaller");
+		return_error(R"Number is too big, use INT_MAX or smaller"RESET);
 	table->time_to_die *= 1000;
 	table->time_to_eat *= 1000;
 	table->time_to_sleep *= 1000;
 	if (table->time_to_die < 60000 || table->time_to_eat < 60000
 		|| table->time_to_sleep < 60000)
-		return_error("Use timestamps bigger than 60ms");
+		return_error(R"Use timestamps bigger than 60ms"RESET);
 }

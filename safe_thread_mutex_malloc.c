@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_mutex.c                                     :+:      :+:    :+:   */
+/*   safe_thread_mutex_malloc.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:20:59 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/15 13:15:45 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/21 12:55:33 by jasminelage      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	*safe_malloc(size_t bytes)
+{
+	void	*result;
+
+	result = malloc(bytes);
+	if (bytes == 0)
+		return_error("Error at malloc");
+	return (result);
+}
 
 static void	mutex_error(int status)
 {
