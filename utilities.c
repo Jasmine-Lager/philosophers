@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:35:44 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/29 13:04:32 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/29 13:58:42 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	return_error(const char *error_msg)
 {
-	printf("❗️%s❗️\n", error_msg);
+	printf(R "❗️%s❗️\n" RESET, error_msg);
 	exit(EXIT_FAILURE);
 }
 
