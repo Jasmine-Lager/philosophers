@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initilizing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/22 11:32:09 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/29 13:17:58 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	init_philosophers(t_table *table)
 		philosopher->table = table;
 		safe_mutex(&philosopher->philosopher_mutex, INIT);
 		assing_fork(philosopher, table->fork, i);
+		i++;
 	}
 }
 
