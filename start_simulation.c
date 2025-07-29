@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/29 13:51:33 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/29 15:50:19 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	eating(t_philosophers *philosopher)
 static void	thinking(t_philosophers *philosopher)
 {
 	print_status(THINKING, philosopher, DEBUG_MODE);
+	// to be finished (need it dynamic)
 }
 
 void	*dining(void *data)

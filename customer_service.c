@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:05:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/29 13:04:47 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/29 14:57:19 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	*customer_service(void *value)
 			{
 				paste_bool(&table->table_mutex, &table->finish, true);
 				print_status(DEAD, table->philosopher + i, DEBUG_MODE);
+				break ;
 			}
 			i++;
 		}

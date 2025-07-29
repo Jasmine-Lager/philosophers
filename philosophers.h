@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/29 13:54:35 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/29 15:04:26 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define B "\x1b[34m"
 # define RESET "\x1b[0m"
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE true
 
 // for more readable code; renaming
 // mutex = MUTual EXclusion object = "reserves" global variables
