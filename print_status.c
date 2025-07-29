@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 14:14:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/21 13:31:56 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/29 13:04:38 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,28 @@
 // Replace timestamp_in_ms with the current timestamp in milliseconds
 // and X with the philosopher number.
 
-static void	print_debug(t_philosopher_status status, 
-	t_philosophers *philosopher, long time_stamp)
+static void	print_debug(t_philosopher_status status,
+		t_philosophers *philosopher, long time_stamp)
 {
 	if (status == TAKE_LEFT_FORK && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d took left fork 🥄, (fork id: %d)"RESET, time_stamp, 
-		philosopher->id, philosopher->left_fork->fork_id);
+		printf(B "%-6ld %d took left fork 🥄, (fork id: %d)" RESET, time_stamp,
+			philosopher->id, philosopher->left_fork->fork_id);
 	if (status == TAKE_RIGHT_FORK && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d took right fork 🥄, (fork id: %d)"RESET, time_stamp, 
-		philosopher->id, philosopher->right_fork->fork_id);
+		printf(B "%-6ld %d took right fork 🥄, (fork id: %d)" RESET, time_stamp,
+			philosopher->id, philosopher->right_fork->fork_id);
 	else if (status == EATING && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d is eating 🍽️,\n%ld meals eaten 🍕"RESET, time_stamp, 
-		philosopher->id, philosopher->meals_count);
+		printf(B "%-6ld %d is eating 🍽️,\n%ld meals eaten 🍕" RESET, time_stamp,
+			philosopher->id, philosopher->meals_count);
 	else if (status == SLEEPING && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d is sleeping 😴"RESET, time_stamp, philosopher->id);
+		printf(B "%-6ld %d is sleeping 😴" RESET, time_stamp, philosopher->id);
 	else if (status == THINKING && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d is thinking 🤔"RESET, time_stamp, philosopher->id);
+		printf(B "%-6ld %d is thinking 🤔" RESET, time_stamp, philosopher->id);
 	else if (status == DEAD && !finished_simulation(philosopher->table))
-		printf(B"%-6ld %d died 🪦"RESET, time_stamp, philosopher->id);
+		printf(B "%-6ld %d died 🪦" RESET, time_stamp, philosopher->id);
 }
 
-void	print_status(t_philosopher_status status, t_philosophers *philosopher, 
-	bool debug)
+void	print_status(t_philosopher_status status, t_philosophers *philosopher,
+		bool debug)
 {
 	long	time_stamp;
 
@@ -59,7 +59,7 @@ void	print_status(t_philosopher_status status, t_philosophers *philosopher,
 		&& !finished_simulation(philosopher->table))
 		printf("%-6ld %d has taken a fork 🥄", time_stamp, philosopher->id);
 	else if (status == EATING && !finished_simulation(philosopher->table))
-		printf("%-6ld %d is eating 🍽️,\n%ld meals eaten 🍕", time_stamp, 
+		printf("%-6ld %d is eating 🍽️,\n%ld meals eaten 🍕", time_stamp,
 			philosopher->id, philosopher->meals_count);
 	else if (status == SLEEPING && !finished_simulation(philosopher->table))
 		printf("%-6ld %d is sleeping 😴", time_stamp, philosopher->id);

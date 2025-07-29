@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/22 11:19:16 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/29 13:07:56 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include <limits.h> // INT_MAX, INT_MAX
 # include <pthread.h>
 // mutex: init destroy lock unlock,threads: create join detach
+# include <errno.h>    // For error codes like EINVAL, EPERM, etc.
 # include <stdbool.h>  // bool flags
 # include <stdio.h>    // printf
 # include <stdlib.h>   // malloc, free
 # include <string.h>   // memset
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // write, usleep
-# include <errno.h> // For error codes like EINVAL, EPERM, etc.
 // no libft authorization here
 
 // ANSI escape codes for colored text :)
@@ -39,7 +39,7 @@
 typedef pthread_mutex_t	t_mutex;
 typedef pthread_t		t_thread;
 
-typedef enum 			e_code
+typedef enum e_code
 {
 	LOCK,
 	UNLOCK,
@@ -50,14 +50,14 @@ typedef enum 			e_code
 	DETACH,
 }						t_code;
 
-typedef enum 			e_time
+typedef enum e_time
 {
 	SECONDS,
 	MILISECONDS,
 	MICROSECONDS,
 }						t_time;
 
-typedef enum			e_philosopher_status
+typedef enum e_philosopher_status
 {
 	TAKE_LEFT_FORK,
 	TAKE_RIGHT_FORK,
@@ -68,15 +68,15 @@ typedef enum			e_philosopher_status
 }						t_philosopher_status;
 
 // declaration for compiling
-typedef struct			s_table t_table;
+typedef struct s_table	t_table;
 
-typedef struct			s_forks
+typedef struct s_forks
 {
 	t_mutex				fork;
 	int					fork_id;
 }						t_forks;
 
-typedef struct			s_philosophers
+typedef struct s_philosophers
 {
 	int					id;
 	long				time_last_eat;
@@ -91,7 +91,7 @@ typedef struct			s_philosophers
 
 // ./philosophers 5 800 200 200 [5]
 // number_of_philosophers time_to_die time_to_eat time_to_sleep [meals_to_full]
-typedef struct			s_table
+typedef struct s_table
 {
 	long				number_of_philosophers;
 	long				time_to_die;
@@ -106,7 +106,7 @@ typedef struct			s_table
 	t_philosophers		*philosopher;
 	t_mutex				table_mutex;
 	t_mutex				printing_lock_mutex;
-	pthread_t			waiter; // monitoring thread looking for dead philos
+	pthread_t			waiter;
 }						t_table;
 
 // copy_paste.c
@@ -118,11 +118,10 @@ void					paste_long(t_mutex *mutex, long *dst, long value);
 // customer_service.c
 void					wait_for_everyone(t_table *table);
 void					increase_thread_count(t_mutex *mutex, long *value);
-bool					everyone_ready(t_mutex *mutex, long *threads, 
+bool					everyone_ready(t_mutex *mutex, long *threads,
 							long number_of_philosophers);
 bool					philosopher_dead(t_philosophers *philosopher);
 void					*customer_service(void *value);
-
 
 // initializing.c
 void					initialize(t_table *table);
@@ -131,13 +130,12 @@ void					initialize(t_table *table);
 void					parsing(t_table *table, char **argv);
 
 // print_status.c
-void					print_status(t_philosopher_status status, 
+void					print_status(t_philosopher_status status,
 							t_philosophers *philosopher, bool bugs);
 
 // start_simulation.c
 void					*dining(void *data);
 void					start_simulation(t_table *table);
-
 
 // safe_thread_mutex_malloc.c
 void					safe_mutex(t_mutex *mutex, t_code code);
@@ -151,6 +149,5 @@ bool					finished_simulation(t_table *table);
 long					get_time(t_time time);
 void					better_usleep(long microseconds, t_table *table);
 void					cleanup_and_exit(t_table *table);
-
 
 #endif

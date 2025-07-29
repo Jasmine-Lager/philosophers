@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:35:44 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/21 13:25:22 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/29 13:04:32 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	return_error(const char *error_msg)
 
 bool	finished_simulation(t_table *table)
 {
-	return(copy_bool(&table->table_mutex, &table->finish));
+	return (copy_bool(&table->table_mutex, &table->finish));
 }
 
 long	get_time(t_time time)
@@ -34,8 +34,8 @@ long	get_time(t_time time)
 	else if (time == MILISECONDS)
 		return ((time_value.tv_sec * 1000) + (time_value.tv_usec / 1000));
 	else if (time == MICROSECONDS)
-		return((time_value.tv_sec * 1000000) + time_value.tv_usec);
-	else	
+		return ((time_value.tv_sec * 1000000) + time_value.tv_usec);
+	else
 		return_error(R"Wrong time input"RESET);
 	return (-1);
 }
@@ -76,9 +76,9 @@ void	cleanup_and_exit(t_table *table)
 {
 	t_philosophers	*philosopher;
 	int				i;
-	
+
 	i = 0;
-	while(i < table->number_of_philosophers)
+	while (i < table->number_of_philosophers)
 	{
 		philosopher = table->philosopher + i;
 		safe_mutex(&philosopher->philosopher_mutex, DESTROY);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_simulation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/23 16:50:54 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/29 13:10:03 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	eating(t_philosophers *philosopher)
 	print_status(TAKE_LEFT_FORK, philosopher, DEBUG_MODE);
 	safe_mutex(&philosopher->right_fork->fork, LOCK);
 	print_status(TAKE_RIGHT_FORK, philosopher, DEBUG_MODE);
-	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat, 
+	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
 		get_time(MILISECONDS));
 	philosopher->meals_count++;
 	print_status(EATING, philosopher, DEBUG_MODE);
@@ -41,9 +41,9 @@ void	*dining(void *data)
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
-	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat, 
+	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
 		get_time(MILISECONDS));
-	increase_thread_count(&philosopher->table->table_mutex, 
+	increase_thread_count(&philosopher->table->table_mutex,
 		&philosopher->table->threads_count);
 	while (!finished_simulation(philosopher->table))
 	{
@@ -54,24 +54,24 @@ void	*dining(void *data)
 		better_usleep(philosopher->table->time_to_sleep, philosopher->table);
 		thinking(philosopher);
 	}
-	return(NULL);
+	return (NULL);
 }
-static void *one_philosopher(void *data)
+
+static void	*one_philosopher(void *data)
 {
-    t_philosophers *philosopher;
+	t_philosophers	*philosopher;
 
-    philosopher = (t_philosophers *)data;
-    wait_for_everyone(philosopher->table);
-    paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
-        get_time(MILISECONDS));
-    increase_thread_count(&philosopher->table->table_mutex,
-        &philosopher->table->threads_count);
-    print_status(TAKE_LEFT_FORK, philosopher, DEBUG_MODE);
-    while(!finished_simulation(philosopher->table))
-        better_usleep(200, philosopher->table);
-    return (NULL);
+	philosopher = (t_philosophers *)data;
+	wait_for_everyone(philosopher->table);
+	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
+		get_time(MILISECONDS));
+	increase_thread_count(&philosopher->table->table_mutex,
+		&philosopher->table->threads_count);
+	print_status(TAKE_LEFT_FORK, philosopher, DEBUG_MODE);
+	while (!finished_simulation(philosopher->table))
+		better_usleep(200, philosopher->table);
+	return (NULL);
 }
-
 
 // ./philosophers 5 800 200 200 [5]
 // number_of_philosophers time_to_die time_to_eat time_to_sleep [meals_to_full]
@@ -83,13 +83,13 @@ void	start_simulation(t_table *table)
 	if (table->number_of_philosophers == 0)
 		return ;
 	else if (table->number_of_philosophers == 1)
-		safe_thread(&table->philosopher[0].thread_id, one_philosopher, 
+		safe_thread(&table->philosopher[0].thread_id, one_philosopher,
 			&table->philosopher[0], CREATE);
 	else if (table->number_of_philosophers > 1)
 	{
 		while (i < table->number_of_philosophers)
 		{
-			safe_thread(&table->philosopher[i].thread_id, dining, 
+			safe_thread(&table->philosopher[i].thread_id, dining,
 				&table->philosopher[i], CREATE);
 			i++;
 		}
@@ -98,7 +98,7 @@ void	start_simulation(t_table *table)
 	table->start = get_time(MICROSECONDS);
 	paste_bool(&table->table_mutex, &table->everyone_ready, true);
 	i = -1;
-	while(i++ < table->number_of_philosophers)
+	while (i++ < table->number_of_philosophers)
 		safe_thread(&table->philosopher[i].thread_id, NULL, NULL, JOIN);
 	paste_bool(&table->table_mutex, &table->finish, true);
 	safe_thread(&table->waiter, NULL, NULL, JOIN);
