@@ -9,12 +9,13 @@ SRCS = \
 	parsing.c \
 	print_status.c \
 	safe_thread_mutex_malloc.c \
+	simulation_one.c \
 	start_simulation.c \
 	utilities.c
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = philosophers
+NAME = philo
 
 all: $(NAME)
 

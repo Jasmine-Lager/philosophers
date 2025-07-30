@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:05:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/29 14:57:19 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:17:26 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	philosopher_dead(t_philosophers *philosopher)
 	long	time_last_eat;
 	long	time_to_die;
 
+	if(copy_bool(&philosopher->philosopher_mutex, &philosopher->full))
+		return (false);
 	if (copy_bool(&philosopher->philosopher_mutex, &philosopher->full))
 		return (false);
 	time_last_eat = get_time(MILISECONDS)

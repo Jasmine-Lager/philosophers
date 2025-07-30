@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/29 15:04:26 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 12:38:35 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 // no libft authorization here
 
 // ANSI escape codes for colored text :)
-# define R "\x1b[31m"
-# define G "\x1b[32m"
-# define B "\x1b[34m"
+# define R "\x1b[1;31m"	// Red bold
+# define G "\x1b[1;32m"	// Green bold
+# define B "\x1b[34m"	// Blue normal
 # define RESET "\x1b[0m"
 
 # define DEBUG_MODE true
@@ -124,24 +124,35 @@ bool					philosopher_dead(t_philosophers *philosopher);
 void					*customer_service(void *value);
 
 // initializing.c
+void					assing_fork(t_philosophers *philosopher, t_forks *fork,
+							int chair);
+void					init_philosophers(t_table *table);
 void					initialize(t_table *table);
 
 // parsing.c
+long					ft_atol(const char *str);
 void					parsing(t_table *table, char **argv);
 
 // print_status.c
 void					print_status(t_philosopher_status status,
 							t_philosophers *philosopher, bool bugs);
 
-// start_simulation.c
-void					*dining(void *data);
-void					start_simulation(t_table *table);
-
 // safe_thread_mutex_malloc.c
 void					safe_mutex(t_mutex *mutex, t_code code);
 void					safe_thread(t_thread *thread, void *(*ops)(void *),
 							void *data, t_code code);
 void					*safe_malloc(size_t bytes);
+
+// simulation_one.c
+void					*one_philosopher(void *data);
+
+// start_simulation.c
+void					fair_waiting(t_philosophers *philosopher);
+void					thinking(t_philosophers *philosopher,
+							bool before_simulation);
+void					eating(t_philosophers *philosopher);
+void					*dining(void *data);
+void					start_simulation(t_table *table);
 
 // utilities.c
 void					return_error(const char *error_msg);

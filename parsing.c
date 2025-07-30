@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 10:04:28 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/21 13:27:13 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/30 12:09:34 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static long	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int		i;
 	long	result;

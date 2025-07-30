@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/29 13:17:58 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 12:10:03 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // checking philolosopher id to see if its odd or even
 // based on that he tries to take fork (either it has been taken on not yet)
-static void	assing_fork(t_philosophers *philosopher, t_forks *fork, int chair)
+void	assing_fork(t_philosophers *philosopher, t_forks *fork, int chair)
 {
 	int	number_of_philosophers;
 
@@ -31,7 +31,7 @@ static void	assing_fork(t_philosophers *philosopher, t_forks *fork, int chair)
 	}
 }
 
-static void	init_philosophers(t_table *table)
+void	init_philosophers(t_table *table)
 {
 	int				i;
 	t_philosophers	*philosopher;
