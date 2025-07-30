@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/30 12:31:40 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:40:43 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	start_simulation(t_table *table)
 			&table->philosopher[0], CREATE);
 	else if (table->number_of_philosophers > 1)
 	{
-		while (i++ < table->number_of_philosophers)
+		while (i++ < table->number_of_philosophers - 1)
 			safe_thread(&table->philosopher[i].thread_id, dining,
 				&table->philosopher[i], CREATE);
 	}
@@ -110,7 +110,7 @@ void	start_simulation(t_table *table)
 	table->start = get_time(MILISECONDS);
 	paste_bool(&table->table_mutex, &table->everyone_ready, true);
 	i = -1;
-	while (i++ < table->number_of_philosophers)
+	while (i++ < table->number_of_philosophers - 1)
 		safe_thread(&table->philosopher[i].thread_id, NULL, NULL, JOIN);
 	paste_bool(&table->table_mutex, &table->finish, true);
 	safe_thread(&table->waiter, NULL, NULL, JOIN);

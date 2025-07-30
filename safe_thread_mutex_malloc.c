@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_thread_mutex_malloc.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasminelager <jasminelager@student.42.f    +#+  +:+       +#+        */
+/*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:20:59 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/21 12:55:33 by jasminelage      ###   ########.fr       */
+/*   Updated: 2025/07/30 15:26:31 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*safe_malloc(size_t bytes)
 	void	*result;
 
 	result = malloc(bytes);
-	if (bytes == 0)
+	if (bytes == 0 || !result)
 		return_error("Error at malloc");
 	return (result);
 }

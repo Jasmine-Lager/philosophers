@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/30 12:38:35 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 16:09:51 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 // no libft authorization here
 
 // ANSI escape codes for colored text :)
-# define R "\x1b[1;31m"	// Red bold
-# define G "\x1b[1;32m"	// Green bold
-# define B "\x1b[34m"	// Blue normal
+# define R "\x1b[1;31m" // Red bold
+# define G "\x1b[1;32m" // Green bold
+# define B "\x1b[34m"   // Blue normal
 # define RESET "\x1b[0m"
 
-# define DEBUG_MODE true
+# define DEBUG_MODE false
 
 // for more readable code; renaming
 // mutex = MUTual EXclusion object = "reserves" global variables

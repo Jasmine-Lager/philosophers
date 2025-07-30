@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/30 12:10:03 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:15:46 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	initialize(t_table *table)
 {
 	int	i;
 
-	i = 0;
 	table->finish = false;
 	table->everyone_ready = false;
 	table->threads_count = 0;
@@ -63,6 +62,7 @@ void	initialize(t_table *table)
 	safe_mutex(&table->table_mutex, INIT);
 	safe_mutex(&table->printing_lock_mutex, INIT);
 	table->fork = safe_malloc(sizeof(t_forks) * table->number_of_philosophers);
+	i = 0;
 	while (i < table->number_of_philosophers)
 	{
 		safe_mutex(&table->fork[i].fork, INIT);
