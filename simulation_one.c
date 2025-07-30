@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 12:28:11 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/30 12:28:18 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/30 16:15:04 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*one_philosopher(void *data)
 {
-	t_philosophers *philosopher;
+	t_philosophers	*philosopher;
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
