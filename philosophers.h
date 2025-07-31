@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/30 16:43:36 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 12:06:15 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ bool					philosopher_dead(t_philosophers *philosopher);
 void					*customer_service(void *value);
 
 // initializing.c
-void					assing_fork(t_philosophers *philosopher, t_forks *fork,
+void					assign_fork(t_philosophers *philosopher, t_forks *fork,
 							int chair);
 void					init_philosophers(t_table *table);
 void					initialize(t_table *table);
