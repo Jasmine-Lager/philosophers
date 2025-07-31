@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:04:00 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/30 16:55:04 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:57:25 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	eating(t_philosophers *philosopher)
 	print_status(TAKE_LEFT_FORK, philosopher, DEBUG_MODE);
 	safe_mutex(&philosopher->right_fork->fork, LOCK);
 	print_status(TAKE_RIGHT_FORK, philosopher, DEBUG_MODE);
-	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
+	set_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
 		get_time(MILISECONDS));
 	philosopher->meals_count++;
 	print_status(EATING, philosopher, DEBUG_MODE);
 	better_usleep(philosopher->table->time_to_eat, philosopher->table);
 	if (philosopher->table->meals_to_full > 0
 		&& philosopher->table->meals_to_full == philosopher->meals_count)
-		paste_bool(&philosopher->philosopher_mutex, &philosopher->full, true);
+		set_bool(&philosopher->philosopher_mutex, &philosopher->full, true);
 	safe_mutex(&philosopher->left_fork->fork, UNLOCK);
 	safe_mutex(&philosopher->right_fork->fork, UNLOCK);
 }
@@ -69,7 +69,7 @@ void	*dining(void *data)
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
-	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
+	set_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
 		get_time(MILISECONDS));
 	increase_thread_count(&philosopher->table->table_mutex,
 		&philosopher->table->threads_count);
@@ -108,11 +108,11 @@ void	start_simulation(t_table *table)
 	}
 	safe_thread(&table->waiter, customer_service, table, CREATE);
 	table->start = get_time(MILISECONDS);
-	paste_bool(&table->table_mutex, &table->everyone_ready, true);
+	set_bool(&table->table_mutex, &table->everyone_ready, true);
 	i = -1;
 	while (i++ < table->number_of_philosophers - 1)
 		safe_thread(&table->philosopher[i].thread_id, NULL, NULL, JOIN);
-	paste_bool(&table->table_mutex, &table->finish, true);
+	set_bool(&table->table_mutex, &table->finish, true);
 	safe_thread(&table->waiter, NULL, NULL, JOIN);
 }
 // please dont kill me for initializing at -1, I would use

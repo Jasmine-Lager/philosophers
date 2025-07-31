@@ -1,9 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread # -pthread necesary for mutex & threads
-
+# -g -fsanitize=address -fno-omit-frame-pointer # is 
 SRCS = \
-	copy_paste.c \
 	customer_service.c \
+	get_set_go.c \
 	initilizing.c \
 	main.c \
 	parsing.c \

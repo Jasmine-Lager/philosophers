@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:05:26 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/30 16:15:35 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:57:51 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // loops until flag is changed
 void	wait_for_everyone(t_table *table)
 {
-	while (!copy_bool(&table->table_mutex, &table->everyone_ready))
+	while (!get_bool(&table->table_mutex, &table->everyone_ready))
 		;
 }
 
@@ -46,12 +46,12 @@ bool	philosopher_dead(t_philosophers *philosopher)
 	long	time_last_eat;
 	long	time_to_die;
 
-	if (copy_bool(&philosopher->philosopher_mutex, &philosopher->full))
+	if (get_bool(&philosopher->philosopher_mutex, &philosopher->full))
 		return (false);
-	if (copy_bool(&philosopher->philosopher_mutex, &philosopher->full))
+	if (get_bool(&philosopher->philosopher_mutex, &philosopher->full))
 		return (false);
 	time_last_eat = get_time(MILISECONDS)
-		- copy_long(&philosopher->philosopher_mutex,
+		- get_long(&philosopher->philosopher_mutex,
 			&philosopher->time_last_eat);
 	time_to_die = philosopher->table->time_to_die / 1000;
 	if (time_last_eat > time_to_die)
@@ -76,7 +76,7 @@ void	*customer_service(void *value)
 		{
 			if (philosopher_dead(table->philosopher + i))
 			{
-				paste_bool(&table->table_mutex, &table->finish, true);
+				set_bool(&table->table_mutex, &table->finish, true);
 				print_status(DEAD, table->philosopher + i, DEBUG_MODE);
 				break ;
 			}

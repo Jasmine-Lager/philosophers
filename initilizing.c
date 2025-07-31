@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:03:06 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/31 12:12:59 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:50:54 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 // checking philolosopher id to see if its odd or even
 // based on that he tries to take fork (either it has been taken on not yet)
-void	assign_fork(t_philosophers *philosopher, t_forks *fork, int chair)
+void	assign_fork(t_philosophers *philosopher, t_forks *fork, int i)
 {
 	int	number_of_philosophers;
 
 	number_of_philosophers = philosopher->table->number_of_philosophers;
 	if (philosopher->id % 2 == 1)
 	{
-		philosopher->left_fork = &fork[chair];
-		philosopher->right_fork = &fork[(chair + 1) % number_of_philosophers];
+		philosopher->left_fork = &fork[i];
+		philosopher->right_fork = &fork[(i + 1) % number_of_philosophers];
 	}
 	else
 	{
-		philosopher->left_fork = &fork[(chair + 1) % number_of_philosophers];
-		philosopher->right_fork = &fork[chair];
+		philosopher->left_fork = &fork[(i + 1) % number_of_philosophers];
+		philosopher->right_fork = &fork[i];
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:35:44 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/30 16:14:46 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:57:38 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	return_error(const char *error_msg)
 
 bool	finished_simulation(t_table *table)
 {
-	return (copy_bool(&table->table_mutex, &table->finish));
+	return (get_bool(&table->table_mutex, &table->finish));
 }
 
 long	get_time(t_time time)

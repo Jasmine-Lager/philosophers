@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 12:31:00 by jasminelage       #+#    #+#             */
-/*   Updated: 2025/07/31 12:06:15 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:58:50 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,6 @@ typedef struct s_table
 	pthread_t			waiter;
 }						t_table;
 
-// copy_paste.c
-bool					copy_bool(t_mutex *mutex, bool *value);
-void					paste_bool(t_mutex *mutex, bool *dst, bool value);
-long					copy_long(t_mutex *mutex, long *value);
-void					paste_long(t_mutex *mutex, long *dst, long value);
-
 // customer_service.c
 void					wait_for_everyone(t_table *table);
 void					increase_thread_count(t_mutex *mutex, long *value);
@@ -123,9 +117,15 @@ bool					everyone_ready(t_mutex *mutex, long *threads,
 bool					philosopher_dead(t_philosophers *philosopher);
 void					*customer_service(void *value);
 
+// get_set_go.c
+bool					get_bool(t_mutex *mutex, bool *value);
+void					set_bool(t_mutex *mutex, bool *dst, bool value);
+long					get_long(t_mutex *mutex, long *value);
+void					set_long(t_mutex *mutex, long *dst, long value);
+
 // initializing.c
 void					assign_fork(t_philosophers *philosopher, t_forks *fork,
-							int chair);
+							int i);
 void					init_philosophers(t_table *table);
 void					initialize(t_table *table);
 

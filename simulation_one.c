@@ -6,7 +6,7 @@
 /*   By: jlager <jlager@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 12:28:11 by jlager            #+#    #+#             */
-/*   Updated: 2025/07/30 16:54:54 by jlager           ###   ########.fr       */
+/*   Updated: 2025/07/31 13:57:16 by jlager           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*one_philosopher(void *data)
 
 	philosopher = (t_philosophers *)data;
 	wait_for_everyone(philosopher->table);
-	paste_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
+	set_long(&philosopher->philosopher_mutex, &philosopher->time_last_eat,
 		get_time(MILISECONDS));
 	increase_thread_count(&philosopher->table->table_mutex,
 		&philosopher->table->threads_count);
